@@ -1,0 +1,19 @@
+{
+  "name": "slideshow-element",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node esbuild.config.js",
+    "build:watch": "node esbuild.config.js --watch",
+    "dev": "node esbuild.config.js --serve"
+  },
+  "dependencies": {
+    "preact": "^10.22.0",
+    "preact-custom-element": "^4.2.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.5",
+    "typescript": "^5.5.4"
+  }
+}
