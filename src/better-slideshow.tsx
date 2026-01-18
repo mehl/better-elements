@@ -66,6 +66,7 @@ export function BetterSlideshow({ slides, delay, zoom }: SlideshowProps) {
           const img = await loadImage(slide.src);
           if (slide.hotspot && slide.hotspot.length === 2) {
             img.style.transformOrigin = `${slide.hotspot[0] * 100}% ${slide.hotspot[1] * 100}%`;
+            img.style.objectPosition = `${slide.hotspot[0] * 100}% ${slide.hotspot[1] * 100}%`;
           }
           const div = createSlide(loadedSlides.length, img);
           loadedSlides.push(div);

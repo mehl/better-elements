@@ -40,7 +40,7 @@ async function getHtmlVars() {
   const files = await fs.readdir(demoDir);
   const slides = files.filter(file => path.extname(file) === ".jpg").map(file => ({
     src: file,
-    hotspot: [0, 0]
+    hotspot: [.5, 1]
   }));
   // HTML template variables for demo/index.html.
   const htmlVars = {
