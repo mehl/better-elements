@@ -3,7 +3,8 @@ import { useEffect, useMemo, useRef } from "preact/hooks";
 
 type SlideshowProps = {
   slides?: string;
-  delay?: number;
+  duration?: number;
+  fade?: number;
   zoom?: number;
 };
 
@@ -22,6 +23,7 @@ async function loadImage(src: string): Promise<HTMLImageElement> {
 }
 
 const DELAY = 5000;
+const FADE = 1000;
 const ZOOM = 1.3;
 
 function createSlide(index: number, img: HTMLImageElement) {
@@ -42,9 +44,10 @@ function createSlide(index: number, img: HTMLImageElement) {
   };
 }
 
-export function BetterSlideshow({ slides, delay, zoom }: SlideshowProps) {
+export function BetterSlideshow({ slides, duration, fade, zoom }: SlideshowProps) {
   const slidesRaw: SlideImageConfig[] = useMemo(() => slides ? JSON.parse(slides) : [], [slides]);
-  const delayRaw: number = useMemo(() => delay && !isNaN(delay) ? delay : DELAY, [delay]);
+  const durationRaw: number = useMemo(() => duration && !isNaN(duration) ? duration : DELAY, [duration]);
+  const fadeRaw: number = useMemo(() => fade && !isNaN(fade) ? fade : FADE, [fade]);
   const zoomRaw: number = useMemo(() => ((zoom && !isNaN(zoom) ? zoom : ZOOM) - 1) / 2, [zoom]);
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -103,7 +106,7 @@ export function BetterSlideshow({ slides, delay, zoom }: SlideshowProps) {
   useEffect(() => {
     let last = performance.now();
     const loop = (time: number) => {
-      progress = Math.min(progress + (time - last) / delayRaw, 1);
+      progress = Math.min(progress + (time - last) / durationRaw, 1);
       // progress = .5;
       last = time;
       if (progress >= 1 && loadedSlides.length >= 2) {
@@ -124,6 +127,8 @@ export function BetterSlideshow({ slides, delay, zoom }: SlideshowProps) {
       }
     };
   }, []);
+  console.log(fadeRaw, durationRaw);
+  const opacityAcc = 1 / Math.max(fadeRaw / Math.max(durationRaw, 1), 0.01);
 
   return <>
     <style>{`
@@ -158,18 +163,18 @@ export function BetterSlideshow({ slides, delay, zoom }: SlideshowProps) {
 
         .imageContainer img.next {
           visibility: visible;
-          opacity: min(calc(var(--progress, 0) * 2), 1);
+          opacity: min(calc(var(--progress, 0) * ${opacityAcc}), 1);
           transform: scale(calc(var(--progress, 0) * ${zoomRaw} + 1));
         }
 
         .contentContainer .slideContent.current {
           visibility: visible;
-          opacity: calc(1 - min(calc(var(--progress, 0) * 2), 1));
+          opacity: calc(1 - min(calc(var(--progress, 0) * ${opacityAcc}), 1));
         }
 
         .contentContainer .slideContent.next {
           visibility: visible;
-          opacity: min(calc(var(--progress, 0) * 2), 1);
+          opacity: min(calc(var(--progress, 0) * ${opacityAcc}), 1);
         }
 
       `}</style>

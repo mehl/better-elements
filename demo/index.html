@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>better-elements</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(140deg, #f0efe9, #c7d3c6);
+    }
+
+    better-slideshow::part(image-container) {
+      opacity: 0.5;
+    }
+
+    better-slideshow::part(slide-content) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 400%;
+      padding: 1em;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <better-slideshow slides="%SLIDES%" style="width: 100svw; height: 100svh"></better-slideshow>
+  <better-slideshow slides="%SLIDES%"
+    style="width: 100svw; height: 100svh; display: flex; align-items: center; justify-content: center;" duration="8000"
+    fade="1000" zoom="2">
+    <div slot="slide-0">
+      <p>Slide 0</p>
+    </div>
+    <div slot="slide-1">
+      <p>Slide 1</p>
+    </div>
+    <div slot="slide-2">
+      <p>Slide 2</p>
+    </div>
+    <div slot="slide-3">
+      <p>Slide 3</p>
+    </div>
+    <div slot="slide-4">
+      <p>Slide 4</p>
+    </div>
+  </better-slideshow>
+  <script type="module" src="../dist/betterElements.js"></script>
+</body>
+
+</html>

@@ -37,11 +37,24 @@ async function applyHtmlVars(content) {
 async function getHtmlVars() {
   const demoDir = path.join(__dirname, "demo");
 
-  const files = await fs.readdir(demoDir);
-  const slides = files.filter(file => path.extname(file) === ".jpg").map(file => ({
-    src: file,
-    hotspot: [.5, 1]
-  }));
+  const slides = [
+    {
+      src: "aprilia.webp",
+      hotspot: [.5, .8]
+    },
+    {
+      src: "husky.webp",
+      hotspot: [.5, 1]
+    },
+    {
+      src: "sc.webp",
+      hotspot: [.5, .5]
+    },
+    {
+      src: "husky2.webp",
+      hotspot: [.7, .2]
+    }
+  ];
   // HTML template variables for demo/index.html.
   const htmlVars = {
     TITLE: "bf-slideshow",
